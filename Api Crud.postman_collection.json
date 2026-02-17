@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "10161d38-029d-4062-9ee2-e6d08ded20b6",
+		"name": "Api Crud",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "52189223",
+		"_collection_link": "https://robertodeiuliihp-8115450.postman.co/workspace/857deee4-3053-4251-8bcf-9e7bd5dfd5f0/collection/52189223-10161d38-029d-4062-9ee2-e6d08ded20b6?action=share&source=collection_link&creator=52189223"
+	},
+	"item": [
+		{
+			"name": "Crear producto nuevo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "mi producto",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "200",
+							"type": "text"
+						},
+						{
+							"key": "photo",
+							"value": "miProducto.png",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "general",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:300/api/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "300",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un producto",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los productos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar un elemento",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un elemento de la coleccion",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
