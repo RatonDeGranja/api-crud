@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/RatonDeGranja/api-crud#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "mongodb": "^7.1.0",
     "mongojs": "^3.1.0",

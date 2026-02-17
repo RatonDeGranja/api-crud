@@ -1,5 +1,7 @@
 'use strict'
 
+const config = require('./config');
+
 const port = process.env.PORT || 3000;
 
 const express = require('express');
@@ -16,10 +18,45 @@ app.param("coleccion", (req, res, next, coleccion) =>{
     return next();
 });
 
+const cors = require('cors');
+
+//Declaraciones
+
+var allowCrossTokenOrigin = (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    return next();
+};
+
+var allowCrossTokenMethods = (req, res, next) => {
+    res.header("Access-Control-Allow-Methods", "*");
+    return next();
+};
+
+var allowCrossTokenHeaders = (req, res, next) => {
+    res.header("Access-Control-Allow-Headers", "*");
+    return next();
+};
 
 
+const auth = (req, res, next) => { // declaramos la función auth
+    if ( !req.headers.token ) { // si no se envía el token...
+    res.status(401).json({ result: 'KO', msg: "Envía un código válido en la cabecera 'token'"});
+    return;
+    };
+    const queToken = req.headers.token; // recogemos el token de la cabecera llamada “token”
+    if (queToken === "password1234") { // si coincide con nuestro password...
+    return next(); // continuamos con la ejecución del código
+    } else { // en caso contrario...
+    res.status(401).json({ result: 'KO', msg: "No autorizado" });
+    };
+}; 
 
 //Middleware
+
+app.use(cors());
+app.use(allowCrossTokenHeaders);
+app.use(allowCrossTokenMethods);
+app.use(allowCrossTokenOrigin);
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -47,23 +84,17 @@ app.get('/api/:coleccion/:id', (req, res, next) => {
     });
 });
 
-app.post('/api/:coleccion', (req, res, next) => {
+app.post('/api/:coleccion', auth, (req, res, next) => {
     const elemento = req.body;
-    if (!elemento.nombre) {
-        res.status(400).json({
-        error: 'Bad data',
-        description: 'Se precisa al menos un campo <nombre>'
-        });
-    } else {
-        req.collection.save(elemento, (err, coleccionGuardada) => {
-        if (err) return next(err);
-        res.json(coleccionGuardada);
-        });
-        } 
+    req.collection.save(elemento, (err, coleccionGuardada) => {
+    if (err) return next(err);
+    res.json(coleccionGuardada);
+    });
+
 
 });
 
-app.put('/api/:coleccion/:id', (req, res, next) => {
+app.put('/api/:coleccion/:id', auth, (req, res, next) => {
     const elementoId = req.params.id;
     const elementoNuevo = req.body;
 
@@ -78,7 +109,7 @@ app.put('/api/:coleccion/:id', (req, res, next) => {
     );
 });
 
-app.delete('/api/:coleccion/:id', (req, res, next) => {
+app.delete('/api/:coleccion/:id', auth, (req, res, next) => {
     req.collection.remove({_id: id(req.params.id)}, (err, resultado) => {
         if (err) return next(err);
         res.json(resultado);
@@ -88,3 +119,5 @@ app.delete('/api/:coleccion/:id', (req, res, next) => {
 app.listen(port, () => {
     console.log(`API REST ejecutándose en http://localhost:${port}/api/:coleccion/:id`);
 });
+
+
