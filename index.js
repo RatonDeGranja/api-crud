@@ -6,7 +6,10 @@ const fs = require('fs');
 const https = require('https');
 const helmet = require('helmet');
 
-const port = process.env.PORT || 3000;
+const port = config.PORT;
+const urlDB = config.DB;
+const tokenDB = config.TOKEN;
+
 
 const express = require('express');
 const logger = require('morgan');
@@ -14,7 +17,7 @@ const app = express();
 
 
 const mongojs = require('mongojs');
-const db = mongojs('mongodb://127.0.0.1:27017/SD');
+const db = mongojs(urlDB);
 var id = mongojs.ObjectID;
 
 app.param("coleccion", (req, res, next, coleccion) =>{
@@ -49,7 +52,7 @@ const auth = (req, res, next) => { // declaramos la función auth
     return;
     };
     const queToken = req.headers.token; // recogemos el token de la cabecera llamada “token”
-    if (queToken === "password1234") { // si coincide con nuestro password...
+    if (queToken === tokenDB) { // si coincide con nuestro password...
     return next(); // continuamos con la ejecución del código
     } else { // en caso contrario...
     res.status(401).json({ result: 'KO', msg: "No autorizado" });
