@@ -5,7 +5,7 @@
 		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "52189223",
-		"_collection_link": "https://robertodeiuliihp-8115450.postman.co/workspace/857deee4-3053-4251-8bcf-9e7bd5dfd5f0/collection/52189223-10161d38-029d-4062-9ee2-e6d08ded20b6?action=share&source=collection_link&creator=52189223"
+		"_collection_link": "https://robertodeiuliihp-8115450.postman.co/workspace/Roberto-De-Iulii-Sepulcre's-Wor~857deee4-3053-4251-8bcf-9e7bd5dfd5f0/collection/52189223-10161d38-029d-4062-9ee2-e6d08ded20b6?action=share&source=collection_link&creator=52189223"
 	},
 	"item": [
 		{
@@ -54,18 +54,79 @@
 			"response": []
 		},
 		{
-			"name": "Obtener un producto",
+			"name": "Obtener un elemento",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "password1234",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"id\": \"5ad65508f6efc76d03ddbe6f\",\n    \"nombre\": \"Pepe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/mascotas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"mascotas"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los productos",
+			"name": "Obtener todas las colecciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"mascotas\",\n    \"familia\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api\n"
+					]
+				}
 			},
 			"response": []
 		},
@@ -79,6 +140,27 @@
 		},
 		{
 			"name": "Eliminar un elemento de la coleccion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/api/product/24",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"product",
+						"24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los productos de una coleccion",
 			"request": {
 				"method": "GET",
 				"header": []

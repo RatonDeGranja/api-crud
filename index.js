@@ -2,6 +2,10 @@
 
 const config = require('./config');
 
+const fs = require('fs');
+const https = require('https');
+const helmet = require('helmet');
+
 const port = process.env.PORT || 3000;
 
 const express = require('express');
@@ -17,6 +21,7 @@ app.param("coleccion", (req, res, next, coleccion) =>{
     req.collection = db.collection(coleccion);
     return next();
 });
+
 
 const cors = require('cors');
 
@@ -61,9 +66,10 @@ app.use(allowCrossTokenOrigin);
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(helmet());
 
 app.get('/api', (req, res, next) => {
-    console.log('GET /api');
+    console.log('GET /api https');
     db.getCollectionNames((err, colecciones) => {
         if (err) return next(err);
         res.json(colecciones);
@@ -116,8 +122,10 @@ app.delete('/api/:coleccion/:id', auth, (req, res, next) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`API REST ejecutándose en http://localhost:${port}/api/:coleccion/:id`);
+//Canal seguro para lanzar el servidor
+https.createServer({
+        cert: fs.readFileSync('./cert/cert.pem'),
+        key: fs.readFileSync('./cert/key.pem')
+}, app).listen(port, () => {
+    console.log(`Servidor corriendo seguro: http://localhost:${port}/api/:coleccion/:id`);
 });
-
-
